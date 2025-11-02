@@ -50,7 +50,7 @@ simulador-rescisao/
 
 ```bash
 # Clone o repositório
-git clone https://github.com/santos-cleber/simulador_rescisao.git
+git clone https://github.com/Santos-Cleber/simulador_rescisao.git
 
 # Entre na pasta
 cd simulador_rescisao

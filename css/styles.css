@@ -1,0 +1,468 @@
+/* ===================================
+   VARIÁVEIS CSS - TEMA ESCURO
+   =================================== */
+:root {
+  --bg: #07070b;
+  --card: #0f1620;
+  --muted: #98a0b3;
+  --white: #eaf2ff;
+  --accent1: #00ffff;
+  --accent2: #0077ff;
+  --glass: rgba(255,255,255,0.03);
+  --neon: 0 8px 30px rgba(0,255,255,0.08);
+  --radius: 14px;
+  --border-color: rgba(255,255,255,0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===================================
+   VARIÁVEIS CSS - TEMA CLARO
+   =================================== */
+[data-theme="light"] {
+  --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --card: rgba(255, 255, 255, 0.95);
+  --muted: #f6f8fc;
+  --white: #1f2937;
+  --accent1: #8b5cf6;
+  --accent2: #7c3aed;
+  --glass: rgba(139, 92, 246, 0.08);
+  --neon: 0 8px 32px rgba(139, 92, 246, 0.2);
+  --border-color: rgba(139, 92, 246, 0.2);
+}
+
+/* ===================================
+   TRANSIÇÕES GLOBAIS
+   =================================== */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===================================
+   ESTILOS BASE
+   =================================== */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Poppins', sans-serif;
+}
+
+[data-theme="light"] body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+}
+
+/* ===================================
+   LAYOUT PRINCIPAL
+   =================================== */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  position: relative;
+}
+
+.card {
+  width: 100%;
+  max-width: 800px;
+  background: var(--card);
+  padding: 28px;
+  border-radius: var(--radius);
+  box-shadow: var(--neon);
+}
+
+/* ===================================
+   BOTÃO DE ALTERNÂNCIA DE TEMA
+   =================================== */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: var(--neon);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1) rotate(20deg);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* ===================================
+   TIPOGRAFIA
+   =================================== */
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+label {
+  font-size: 0.9rem;
+  color: var(--muted);
+  display: block;
+}
+
+/* ===================================
+   FORMULÁRIOS
+   =================================== */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--glass);
+  color: var(--white);
+  box-sizing: border-box;
+}
+
+select {
+  background: var(--card);
+  cursor: pointer;
+}
+
+select option {
+  background: var(--card);
+  color: var(--white);
+  padding: 10px;
+}
+
+input::placeholder {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+/* ===================================
+   BOTÕES
+   =================================== */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 10px;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===================================
+   RESULTADO
+   =================================== */
+.resultado {
+  margin-top: 20px;
+  background: var(--glass);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.resultado p {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 16px 0;
+}
+
+/* ===================================
+   LOADING OVERLAY
+   =================================== */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.loading-overlay.active {
+  display: flex;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid var(--accent1);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay p {
+  margin-top: 20px;
+  color: var(--white);
+  font-size: 1.1rem;
+}
+
+/* ===================================
+   ALERTS E MENSAGENS
+   =================================== */
+#alertContainer {
+  margin-bottom: 20px;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.alert-success {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #86efac;
+}
+
+.alert-warning {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  color: #fde047;
+}
+
+.alert-icon {
+  font-size: 1.2rem;
+}
+
+.alert-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.alert-close:hover {
+  opacity: 1;
+}
+
+/* ===================================
+   MENSAGENS DE ERRO DOS CAMPOS
+   =================================== */
+.error-message {
+  display: block;
+  color: #fca5a5;
+  font-size: 0.85rem;
+  margin-top: -8px;
+  margin-bottom: 12px;
+  min-height: 20px;
+}
+
+input.invalid, select.invalid {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+input.valid, select.valid {
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+/* ===================================
+   BOTÕES MELHORADOS
+   =================================== */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--glass);
+  color: var(--white);
+  border: 1px solid var(--border-color);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
+.disclaimer {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* ===================================
+   ANIMAÇÕES DE RESULTADO
+   =================================== */
+.resultado {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================================
+   MELHORIAS DE ACESSIBILIDADE
+   =================================== */
+:focus-visible {
+  outline: 2px solid var(--accent1);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+@media (max-width: 600px) {
+  .theme-toggle {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    top: 15px;
+    right: 15px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  .btn {
+    width: 100%;
+    margin-right: 0;
+  }
+}

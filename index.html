@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Simulador de rescisão trabalhista com cálculo de INSS, IRRF, FGTS e verbas rescisórias. Calcule suas verbas de forma rápida e precisa.">
+  <meta name="author" content="Cleber.dev">
+  <meta name="keywords" content="rescisão, trabalhista, cálculo, INSS, IRRF, FGTS, 13º salário, férias, aviso prévio">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://santos-cleber.github.io/simulador_rescisao/">
+  <meta property="og:title" content="Simulador de Rescisão Trabalhista | Cleber.dev">
+  <meta property="og:description" content="Calcule suas verbas rescisórias de forma rápida e precisa. INSS, IRRF, FGTS, 13º e férias.">
+  <meta property="og:image" content="https://santos-cleber.github.io/simulador_rescisao/og-image.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content=" https://santos-cleber.github.io/simulador_rescisao/">
+  <meta property="twitter:title" content="Simulador de Rescisão Trabalhista | Cleber.dev">
+  <meta property="twitter:description" content="Calcule suas verbas rescisórias de forma rápida e precisa. INSS, IRRF, FGTS, 13º e férias.">
+  <meta property="twitter:image" content="https://santos-cleber.github.io/simulador_rescisao//og-image.jpg">
+
+  <title>Simulador de Rescisão | Cleber.dev</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💼%3C/text%3E%3C/svg%3E">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- External Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" onerror="handleJsPDFError()"></script>
+</head>
+<body>
+  <!-- Botão de Alternância de Tema -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+    <span id="themeIcon">☀️</span>
+  </button>
+
+  <!-- Loading Spinner -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Processando...</p>
+  </div>
+
+  <!-- Aplicação Principal -->
+  <main class="app">
+    <section class="card">
+      <h1>Simulador de Rescisão</h1>
+      
+      <!-- Alert Container -->
+      <div id="alertContainer"></div>
+      
+      <!-- Formulário -->
+      <form id="rescisao-form" novalidate>
+        <label for="salario">Salário mensal (R$)</label>
+        <input 
+          type="text" 
+          id="salario" 
+          placeholder="Ex: 3.000,00 ou 3000" 
+          required
+          aria-describedby="salario-error">
+        <span class="error-message" id="salario-error"></span>
+
+        <label for="admissao">Data de admissão</label>
+        <input 
+          type="date" 
+          id="admissao" 
+          required
+          aria-describedby="admissao-error">
+        <span class="error-message" id="admissao-error"></span>
+
+        <label for="saida">Data de saída</label>
+        <input 
+          type="date" 
+          id="saida" 
+          required
+          aria-describedby="saida-error">
+        <span class="error-message" id="saida-error"></span>
+
+        <label for="tipo">Tipo de rescisão</label>
+        <select id="tipo" required>
+          <option value="">Selecione...</option>
+          <option value="semJustaCausa">Sem justa causa</option>
+          <option value="pedidoDemissao">Pedido de demissão</option>
+          <option value="justaCausa">Por justa causa</option>
+          <option value="acordo">Acordo entre as partes</option>
+        </select>
+
+        <label for="avisoPrevio">Tipo de aviso prévio</label>
+        <select id="avisoPrevio">
+          <option value="indenizado">Indenizado</option>
+          <option value="trabalhado">Trabalhado</option>
+          <option value="nao">Não aplicável</option>
+        </select>
+
+        <label for="feriasVencidas">Férias vencidas (quantidade de períodos)</label>
+        <select id="feriasVencidas">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+
+        <label for="diasTrabalhados">Dias trabalhados no mês da saída</label>
+        <input 
+          type="number" 
+          id="diasTrabalhados" 
+          min="0" 
+          max="31" 
+          value="30" 
+          required
+          aria-describedby="dias-error">
+        <span class="error-message" id="dias-error"></span>
+
+        <label for="dependentes">Número de dependentes</label>
+        <input 
+          type="number" 
+          id="dependentes" 
+          min="0" 
+          value="0" 
+          required>
+
+        <!-- Botões de Ação -->
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary">
+            <span class="btn-icon">📊</span> Calcular
+          </button>
+          <button type="button" id="btnReset" class="btn btn-secondary">
+            <span class="btn-icon">🔄</span> Limpar
+          </button>
+          <button type="button" id="btnExportPDF" class="btn btn-success" disabled>
+            <span class="btn-icon">📄</span> Exportar PDF
+          </button>
+          <button type="button" id="btnExportCSV" class="btn btn-success" disabled>
+            <span class="btn-icon">📊</span> Exportar CSV
+          </button>
+        </div>
+      </form>
+
+      <!-- Área de Resultado -->
+      <div id="resultado" class="resultado" style="display:none;"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>💼 Desenvolvido por <strong>Cleber.dev</strong> | Versão 2.0</p>
+      <p class="disclaimer">⚠️ Os cálculos são estimativas. Consulte um profissional para validação.</p>
+    </footer>
+  </main>
+
+  <!-- JavaScript -->
+  <script>
+    // Tratamento de erro caso jsPDF não carregue
+    function handleJsPDFError() {
+      console.error('Erro ao carregar jsPDF');
+      document.getElementById('btnExportPDF').disabled = true;
+      document.getElementById('btnExportPDF').title = 'Biblioteca PDF não disponível';
+    }
+  </script>
+  <script src="js/utils.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/calculadora.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
